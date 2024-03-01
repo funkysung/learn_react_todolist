@@ -1,4 +1,6 @@
-export const dummData = [
+import { Todo } from "../types/todo";
+
+export const dummyData: Todo[] = [
     {
         id: 1,
         title: "Buy pizza ingredients 🍕",
@@ -12,6 +14,6 @@ export const dummData = [
     {
         id: 3,
         title: "do the laundries 👕",
-        completed: false,
+        completed: true,
     },
 ];
