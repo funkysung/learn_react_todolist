@@ -1,51 +1,20 @@
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 //import TodoItem from "./components/TodoItem"
-import { dummyData } from "./data/todos"
+//import { dummyData } from "./data/todos"
 import AddTodoForm from "./components/AddTodoForm";
 import TodoList from "./components/TodoList";
 import TodoSummary from "./components/TodoSummary";
-import { Todo } from "./types/todo";
+//import { Todo } from "./types/todo";
+import useTodos from "./hooks/useTodos";
 
 function App() {
-  const [todos, setTodos] = useState(() => {
-    //below section brings saved todo list from local storage (if exists)
-    const savedTodos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]")
-    return savedTodos.length > 0 ? savedTodos : dummyData;
-  })
-
-  //useEffect is a react component that does not need to be rendered every time by refresing
-  //if any paramenter is passed onto the empty array, the effect will occur only when the array value is altered
-  //this useEffect below allows to store the todolist in browser local memory every time todos item is altered
-  //can check this in work by looking in dev mode -> application -> local storage
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos])
-
-
-  function setTodoCompleted(id: number, completed: boolean) {
-    setTodos((prevTodos) => 
-    prevTodos.map(todo => (todo.id === id ? {...todo, completed} : todo))
-    )
-  }
-
-  function addTodo(title: string) {
-    setTodos(prevTodos => [
-      {
-        id: Date.now(),
-        title,
-        completed: false
-      },
-      ...prevTodos //this structure adds the new item on top of the existing list
-    ])
-  }
-
-  function deleteTodo(id: number) {
-    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id)) // set todo, make copy of prev todo, copy into the prevtodo the current array wiwth those with unmatching id filtered out
-  }
-
-  function deleteAllCompleted() {
-    setTodos(prevTodos => prevTodos.filter(todo => !todo.completed))
-  }
+  const {
+    todos,
+    addTodo,
+    setTodoCompleted,
+    deleteTodo,
+    deleteAllCompleted
+  } = useTodos();
 
   return (
     <main className = "py-10 h-screen space-y-5 overflow-y-auto">
