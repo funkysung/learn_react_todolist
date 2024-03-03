@@ -14,6 +14,6 @@ export const dummyData: Todo[] = [
     {
         id: 3,
         title: "do the laundries 👕",
-        completed: true,
+        completed: false,
     },
 ];
